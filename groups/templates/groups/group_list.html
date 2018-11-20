@@ -30,6 +30,9 @@
         <button type="button" class="btn btn-primary">
           Member <span class="badge badge-light">{{group.members.count}}</span>
         </button>
+        <a href="{%url 'groups:detail' slug=group.slug%}" class='btn btn-primary'>
+            그룹보기
+        </a>
     </div>
     {%endfor%}
 </div>
