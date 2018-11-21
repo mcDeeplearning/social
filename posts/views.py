@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView,CreateView
+from django.views.generic import ListView,CreateView,DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Post
@@ -20,3 +20,5 @@ class PostCreate(LoginRequiredMixin, CreateView):
         
         return super().form_valid(form)
     
+class PostDetail(DetailView):
+    model = Post
