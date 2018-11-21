@@ -1,0 +1,16 @@
+{%extends 'posts/post_base.html'%}
+
+{%block prepost%}
+<div class="col-md-4">
+    <!--user/group에 대한 정보-->
+</div>
+{%endblock%}
+
+{%block post_content%}
+<div class="col-md-8">
+    <!--게시물 하나씩 출력-->
+    {% for post in post_list %}
+        {%include 'posts/_post.html'%}
+    {% endfor %}
+</div>
+{%endblock%}

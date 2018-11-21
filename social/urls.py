@@ -9,4 +9,5 @@ urlpatterns = [
     path('accounts/',include('django.contrib.auth.urls')),
     path('bye/',views.ByePage.as_view(),name='bye'),
     path('groups/',include('groups.urls')),
+    path('posts/',include('posts.urls')),
 ]
