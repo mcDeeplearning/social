@@ -38,3 +38,22 @@ class GroupJoin(LoginRequiredMixin,RedirectView):
             messages.success(self.request,'add a new member')
             
         return super().get(request,*args,**kwargs)
+        
+class GroupLeave(LoginRequiredMixin,RedirectView):
+    # 코드 실행 후 리다이렉트 할 주소 설정
+    def get_redirect_url(self,*args,**kwargs):
+        return reverse('groups:detail',kwargs={'slug':self.kwargs.get('slug')})
+    
+    def get(self,request,*args,**kwargs):
+        try:
+            membership = GroupMember.objects.filter(
+                            user = self.request.user,
+                            group__slug = self.kwargs.get('slug')
+                            ).get()
+        except GroupMember.DoesNotExist:
+            messages.warning(self.request, 'sorry')
+        else:
+            membership.delete()
+            messages.success(self.request, 'delete!!')        
+        
+        return super().get(request,*args,**kwargs)
