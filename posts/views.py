@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView,CreateView,DetailView
+from django.views.generic import ListView,CreateView,DetailView,DeleteView,UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Post
@@ -7,6 +7,8 @@ from groups.models import GroupMember
 
 from django.contrib.auth import get_user_model
 User = get_user_model()
+
+from django.urls import reverse_lazy
 # Create your views here.
 
 class PostList(ListView):
@@ -42,3 +44,21 @@ class UserPosts(ListView):
         context = super().get_context_data(**kwargs)
         context['post_user'] = self.post_user 
         return context
+        
+class PostDelete(LoginRequiredMixin,DeleteView):
+    model = Post
+    success_url = reverse_lazy('posts:list')
+    
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(user_id=self.request.user.id)
+        
+   
+class PostUpdate(LoginRequiredMixin,UpdateView):
+    model = Post
+    fields = ('message',)
+    
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(user_id=self.request.user.id)
+        

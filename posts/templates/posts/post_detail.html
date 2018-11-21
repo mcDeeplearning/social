@@ -6,7 +6,9 @@
       <p class="lead">{{post.message}}</p>
       <hr class="my-4">
       <p>{{post.user.username}} / {{post.created_at}}</p>
+      {% if user.is_authenticated and post.user == user %}
       <a class="btn btn-primary btn-lg" href="#" role="button">수정</a>
-      <a class="btn btn-danger btn-lg" href="#" role="button">삭제</a>
+      <a class="btn btn-danger btn-lg" href="{%url 'posts:delete' post.pk%}" role="button">삭제</a>
+      {%endif%}
     </div>
 {%endblock%}
